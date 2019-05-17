@@ -1,0 +1,35 @@
+.loading {
+  height: 50vh;
+  padding-top: 4rem;
+  text-align: center;
+}
+
+.title {
+  display: block;
+  color: @brand-blue;
+
+  &:visited {
+    color: darken(@brand-blue, 15%);
+  }
+
+  &:hover {
+    color: lighten(@brand-blue, 10%);
+  }
+}
+
+.story {
+  margin-bottom: 1rem;
+}
+
+.byline {
+  font-size: 1rem;
+
+  &::after {
+    content: ' - ';
+  }
+}
+
+.published {
+  font-size: 1rem;
+  font-style: italic;
+}

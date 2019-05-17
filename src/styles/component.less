@@ -1,0 +1,29 @@
+:host {
+  box-sizing: border-box;
+  display: block;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+#mixins {
+  .container() {
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    @media (min-width: 600px) {
+      padding-right: 0;
+      padding-left: 0;
+      width: calc(600px - 2rem);
+      margin: 0 auto;
+    }
+
+    @media (min-width: 800px) {
+      padding-right: 0;
+      padding-left: 0;
+      width: calc(800px - 2rem);
+      margin: 0 auto;
+    }
+  }
+}

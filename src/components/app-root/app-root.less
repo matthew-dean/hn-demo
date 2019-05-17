@@ -1,0 +1,31 @@
+header {
+  background: white;
+  color: #383838;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 2px -1px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  #mixins.container();
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 300;
+  padding: 0 0 0 0.5rem;
+  border-left: 2px solid @brand-red;
+  margin: 0 0 0 -0.5rem;
+}
+
+main {
+  margin-top: 6rem;
+  font-size: 1.2rem;
+  color: #616161;
+}
