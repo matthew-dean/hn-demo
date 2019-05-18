@@ -1,19 +1,14 @@
 import { Component, State } from '@stencil/core';
-import { formatDate } from '../../util/locale';
 
-interface IStoryObject {
-  by: string;
-  title: string;
-  time: number;
-  url: string;
-}
-
+/**
+ * This is the data fetcher for the Hacker News stories.
+ * Renders and manages the story list.
+ */
 @Component({
-  tag: 'app-stories',
-  styleUrl: 'app-stories.less',
+  tag: 'app-fetcher',
   shadow: true
 })
-export class AppStories {
+export class AppFetcher {
   /** Initial keys retrieved from Hacker news */
   storyKeys: number[] = [];
 
@@ -39,10 +34,10 @@ export class AppStories {
   @State() stories: Object[] = [];
 
   /** Error state */
-  @State() error: boolean = false;
+  @State() hasError: boolean = false;
 
   /** End of list */
-  @State() listEnd: boolean = false;
+  @State() isListEnd: boolean = false;
 
   componentWillLoad () {
     this.observer = new IntersectionObserver(this.observerCallback, {
@@ -57,7 +52,7 @@ export class AppStories {
           this.storyKeys = data;
           this.getNewRecords();
         } else {
-          this.error = true;
+          this.hasError = true;
         }
       });
   }
@@ -73,7 +68,7 @@ export class AppStories {
 
     /** Retrieve 50 at a time */
     if (!this.storyKeys[this.fetchIndex]) {
-      this.listEnd = true;
+      this.isListEnd = true;
       this.observer.disconnect();
       return;
     }
@@ -105,6 +100,9 @@ export class AppStories {
     fetch(`https://hacker-news.firebaseio.com/v0/item/${key}.json`)
       .then(response => response.json())
       .then(data => {
+        /**
+         * If data is mal-formed, then fail this response
+         */
         if (!data || !data.title) {
           return Promise.reject();
         }
@@ -116,6 +114,10 @@ export class AppStories {
           this.fetchNext(nextKey);
         } else {
           this.isFetching = false;
+          /**
+           * If we're done fetching but the user is scrolled to the end of the list,
+           * start fetching again.
+           */
           if (this.loaderState && this.loaderState.isIntersecting) {
             this.getNewRecords();
           }
@@ -125,6 +127,10 @@ export class AppStories {
         this.isFetching = false;
         this.fetchIndex = index + 1;
         this.fetchQueue = [];
+        /**
+         * If fetch failed, but we're scrolled to the end of the list, the pick up
+         * with another chunk past our failed request.
+         */
         if (this.loaderState && this.loaderState.isIntersecting) {
           this.getNewRecords();
         }
@@ -135,35 +141,14 @@ export class AppStories {
     this.observer.observe(ref);
   }
 
-  renderStoryItems = () => {
-    return this.stories.map((item: IStoryObject) => {
-      /** HN is in unix time */
-      const time = new Date(item.time * 1000);
-
-      return (
-        <div class='story'>
-          <a class='title' target="_blank" href={item.url}>
-            {item.title}
-          </a>
-          <span class='byline'>by {item.by}</span>
-          <span class='published'>{formatDate(time)}</span>
-        </div>
-      );
-    });
-  }
-
   render = () => (
-    <div>
-      <div>
-        {this.error
-          ? 'There was an error getting the list of stories.'
-          : this.renderStoryItems()
-        }
-      </div>
-      <div class='loading' ref={this.getRef}>
-        {this.isFetching && <app-spinner />}
-        {this.listEnd && <span>End of list</span>}
-      </div>
-    </div>
+    <app-storylist
+      ref={this.getRef}
+      data={this.stories}
+      hasError={this.hasError}
+      isLoading={this.isFetching}
+      isListEnd={this.isListEnd}
+    />
   )
+
 }

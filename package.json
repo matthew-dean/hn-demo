@@ -2,10 +2,13 @@
   "name": "hn-demo",
   "private": true,
   "version": "0.0.1",
-  "description": "Stencil App Starter",
+  "description": "Hacker News Demo",
   "scripts": {
     "build": "stencil build",
-    "start": "stencil build --dev --watch --serve"
+    "test": "stencil test --e2e",
+    "serve": "npm run build && http-server ./www -o",
+    "start": "stencil build --dev --watch --serve",
+    "start:sw": "stencil build --watch --serve"
   },
   "dependencies": {
     "@stencil/core": "~0.16.2",
@@ -13,6 +16,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@stencil/less": "^0.2.0"
+    "@stencil/less": "^0.2.0",
+    "@types/jest": "23.3.14",
+    "@types/puppeteer": "1.12.4",
+    "http-server": "^0.11.1",
+    "jest": "23.6.0",
+    "jest-cli": "23.6.0",
+    "puppeteer": "1.8.0",
+    "workbox-build": "3.4.1"
   }
 }

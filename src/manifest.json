@@ -1,13 +1,8 @@
 {
-  "name": "Stencil Starter",
-  "short_name": "Stencil",
+  "name": "Hacker News Demo",
+  "short_name": "hn-demo",
   "start_url": "/",
   "display": "standalone",
-  "icons": [{
-    "src": "assets/icon/icon.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }],
-  "background_color": "#16161d",
-  "theme_color": "#16161d"
+  "background_color": "#316FEA",
+  "theme_color": "#316FEA"
 }

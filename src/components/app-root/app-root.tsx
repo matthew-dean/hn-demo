@@ -15,7 +15,7 @@ export class AppRoot {
       </header>,
       <div class='container'>
         <main>
-          <app-stories />
+          <app-fetcher />
         </main>
       </div>
     ];

@@ -12,29 +12,52 @@ import '@stencil/core';
 
 export namespace Components {
 
+  interface AppFetcher {}
+  interface AppFetcherAttributes extends StencilHTMLAttributes {}
+
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
   interface AppSpinner {}
   interface AppSpinnerAttributes extends StencilHTMLAttributes {}
 
-  interface AppStories {}
-  interface AppStoriesAttributes extends StencilHTMLAttributes {}
+  interface AppStorylist {
+    'data': Object[];
+    'hasError': boolean;
+    'isListEnd': boolean;
+    'isLoading': boolean;
+    'ref': (el?: HTMLDivElement) => void;
+  }
+  interface AppStorylistAttributes extends StencilHTMLAttributes {
+    'data'?: Object[];
+    'hasError'?: boolean;
+    'isListEnd'?: boolean;
+    'isLoading'?: boolean;
+    'ref'?: (el?: HTMLDivElement) => void;
+  }
 }
 
 declare global {
   interface StencilElementInterfaces {
+    'AppFetcher': Components.AppFetcher;
     'AppRoot': Components.AppRoot;
     'AppSpinner': Components.AppSpinner;
-    'AppStories': Components.AppStories;
+    'AppStorylist': Components.AppStorylist;
   }
 
   interface StencilIntrinsicElements {
+    'app-fetcher': Components.AppFetcherAttributes;
     'app-root': Components.AppRootAttributes;
     'app-spinner': Components.AppSpinnerAttributes;
-    'app-stories': Components.AppStoriesAttributes;
+    'app-storylist': Components.AppStorylistAttributes;
   }
 
+
+  interface HTMLAppFetcherElement extends Components.AppFetcher, HTMLStencilElement {}
+  var HTMLAppFetcherElement: {
+    prototype: HTMLAppFetcherElement;
+    new (): HTMLAppFetcherElement;
+  };
 
   interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
   var HTMLAppRootElement: {
@@ -48,22 +71,24 @@ declare global {
     new (): HTMLAppSpinnerElement;
   };
 
-  interface HTMLAppStoriesElement extends Components.AppStories, HTMLStencilElement {}
-  var HTMLAppStoriesElement: {
-    prototype: HTMLAppStoriesElement;
-    new (): HTMLAppStoriesElement;
+  interface HTMLAppStorylistElement extends Components.AppStorylist, HTMLStencilElement {}
+  var HTMLAppStorylistElement: {
+    prototype: HTMLAppStorylistElement;
+    new (): HTMLAppStorylistElement;
   };
 
   interface HTMLElementTagNameMap {
+    'app-fetcher': HTMLAppFetcherElement
     'app-root': HTMLAppRootElement
     'app-spinner': HTMLAppSpinnerElement
-    'app-stories': HTMLAppStoriesElement
+    'app-storylist': HTMLAppStorylistElement
   }
 
   interface ElementTagNameMap {
+    'app-fetcher': HTMLAppFetcherElement;
     'app-root': HTMLAppRootElement;
     'app-spinner': HTMLAppSpinnerElement;
-    'app-stories': HTMLAppStoriesElement;
+    'app-storylist': HTMLAppStorylistElement;
   }
 
 
